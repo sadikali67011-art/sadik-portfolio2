@@ -1,4 +1,4 @@
-import profile from "../assets/Profile.png";
+import profile from "../../profile.png";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import resume from "../assets/resume.pdf";
