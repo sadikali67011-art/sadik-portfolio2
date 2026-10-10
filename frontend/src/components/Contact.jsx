@@ -23,42 +23,48 @@ const [message,setMessage] = useState("");
 
 
 
-const sendEmail = async (e)=>{
-e.preventDefault();
-setLoading(true);
+const sendEmail = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-const formData = new FormData(form.current);
-const data = {
-  name: formData.get("user_name"),
-  email: formData.get("user_email"),
-  message: formData.get("message")
-};
+  const formData = new FormData(form.current);
+  const data = {
+    name: formData.get("user_name"),
+    email: formData.get("user_email"),
+    message: formData.get("message")
+  };
 
-try {
-  const response = await fetch("http://localhost:5000/api/contact", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
+  try {
+    // ⚠️ Replace 'YOUR_ACCESS_KEY_HERE' with your Web3Forms access key (Get it free at https://web3forms.com/)
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        access_key: "YOUR_ACCESS_KEY_HERE",
+        name: data.name,
+        email: data.email,
+        message: data.message
+      })
+    });
 
-  const result = await response.json();
+    const result = await response.json();
 
-  if (response.ok) {
-    setMessage("✅ Message Sent Successfully!");
-    form.current.reset();
-  } else {
-    setMessage("❌ Failed to send message: " + (result.error || "Unknown error"));
+    if (result.success) {
+      setMessage("✅ Message Sent Successfully!");
+      form.current.reset();
+    } else {
+      setMessage("❌ Failed to send message: " + (result.message || "Unknown error"));
+    }
+  } catch (error) {
+    console.error(error);
+    setMessage("❌ Failed to send message!");
+  } finally {
+    setLoading(false);
   }
-} catch (error) {
-  console.error(error);
-  setMessage("❌ Failed to send message!");
-} finally {
-  setLoading(false);
-}
 };
-
 
 
 
