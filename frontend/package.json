@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sadikali67011-art.github.io/Portfolio.1",
+  "homepage": "https://sadikali67011-art.github.io/sadik-portfolio2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
